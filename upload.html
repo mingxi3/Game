@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传游戏 - GameForge</title>
+    
+    <!-- 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="upload-styles.css">
+    
+    <!-- 粒子效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">GameForge</span>
+            </a>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="games.html" class="nav-link">游戏库</a>
+                <a href="profile.html" class="nav-link">个人中心</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn-logout" id="logoutBtn" style="display: none;">
+                    退出登录
+                </button>
+                <a href="auth.html" class="btn-login" id="loginBtn">登录/注册</a>
+            </div>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 上传游戏主内容 -->
+    <main class="upload-main">
+        <div class="container">
+            <div class="upload-header">
+                <h1 class="upload-title">
+                    <span id="pageTitle">上传新游戏</span>
+                </h1>
+                <p class="upload-subtitle">分享你的创意，让世界看到你的游戏</p>
+            </div>
+
+            <form class="upload-form" id="uploadForm">
+                <!-- 基本信息 -->
+                <div class="form-section">
+                    <h2 class="section-title">基本信息</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="gameTitle">游戏标题 *</label>
+                            <input type="text" id="gameTitle" name="title" required 
+                                   placeholder="输入游戏标题" maxlength="100">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gameCategory">游戏分类 *</label>
+                            <select id="gameCategory" name="category" required>
+                                <option value="">选择分类</option>
+                                <option value="action">动作游戏</option>
+                                <option value="adventure">冒险游戏</option>
+                                <option value="rpg">角色扮演</option>
+                                <option value="strategy">策略游戏</option>
+                                <option value="simulation">模拟游戏</option>
+                                <option value="puzzle">益智游戏</option>
+                                <option value="sports">体育游戏</option>
+                                <option value="racing">竞速游戏</option>
+                                <option value="shooter">射击游戏</option>
+                                <option value="indie">独立游戏</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gameVersion">版本号 *</label>
+                            <input type="text" id="gameVersion" name="version" required 
+                                   placeholder="例如：1.0.0" pattern="\d+\.\d+\.\d+">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gameSize">文件大小 (MB) *</label>
+                            <input type="number" id="gameSize" name="fileSize" required 
+                                   placeholder="例如：500" min="1" max="10000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 游戏描述 -->
+                <div class="form-section">
+                    <h2 class="section-title">游戏描述</h2>
+                    
+                    <div class="form-group">
+                        <label for="shortDescription">简短描述 *</label>
+                        <textarea id="shortDescription" name="description" required 
+                                  placeholder="用简短的话描述你的游戏（最多200字）" 
+                                  maxlength="200" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fullDescription">详细介绍</label>
+                        <textarea id="fullDescription" name="fullDescription" 
+                                  placeholder="详细介绍你的游戏玩法、特色、背景故事等" 
+                                  rows="8"></textarea>
+                    </div>
+                </div>
+
+                <!-- 图片上传 -->
+                <div class="form-section">
+                    <h2 class="section-title">游戏图片</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="coverImage">游戏封面 *</label>
+                            <div class="file-upload">
+                                <input type="file" id="coverImage" name="coverImage" 
+                                       accept="image/*" required>
+                                <div class="file-upload-display">
+                                    <div class="upload-placeholder">
+                                        <span>点击上传封面图片</span>
+                                        <small>建议尺寸：1200x800像素，JPG/PNG格式</small>
+                                    </div>
+                                    <img id="coverPreview" class="preview-image" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="screenshots">游戏截图</label>
+                            <div class="file-upload">
+                                <input type="file" id="screenshots" name="screenshots" 
+                                       accept="image/*" multiple>
+                                <div class="file-upload-display">
+                                    <div class="upload-placeholder">
+                                        <span>点击上传游戏截图</span>
+                                        <small>最多5张，建议尺寸：1920x1080像素</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="screenshots-preview" id="screenshotsPreview"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 游戏文件 -->
+                <div class="form-section">
+                    <h2 class="section-title">游戏文件</h2>
+                    
+                    <div class="form-group">
+                        <label for="gameFile">游戏文件 *</label>
+                        <div class="file-upload">
+                            <input type="file" id="gameFile" name="gameFile" required>
+                            <div class="file-upload-display">
+                                <div class="upload-placeholder">
+                                    <span>点击上传游戏文件</span>
+                                    <small>支持ZIP、RAR、EXE格式，最大2GB</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="file-info" id="fileInfo" style="display: none;">
+                            <span class="file-name"></span>
+                            <span class="file-size"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 系统要求 -->
+                <div class="form-section">
+                    <h2 class="section-title">系统要求</h2>
+                    
+                    <div class="requirements-grid">
+                        <div class="requirement-section">
+                            <h3>最低配置</h3>
+                            <div class="form-group">
+                                <label for="minOS">操作系统</label>
+                                <input type="text" id="minOS" name="minOS" 
+                                       placeholder="例如：Windows 10 64位">
+                            </div>
+                            <div class="form-group">
+                                <label for="minCPU">处理器</label>
+                                <input type="text" id="minCPU" name="minCPU" 
+                                       placeholder="例如：Intel Core i3-8100">
+                            </div>
+                            <div class="form-group">
+                                <label for="minRAM">内存</label>
+                                <input type="text" id="minRAM" name="minRAM" 
+                                       placeholder="例如：4 GB RAM">
+                            </div>
+                            <div class="form-group">
+                                <label for="minGPU">显卡</label>
+                                <input type="text" id="minGPU" name="minGPU" 
+                                       placeholder="例如：NVIDIA GTX 660">
+                            </div>
+                            <div class="form-group">
+                                <label for="minStorage">存储空间</label>
+                                <input type="text" id="minStorage" name="minStorage" 
+                                       placeholder="例如：2 GB 可用空间">
+                            </div>
+                        </div>
+                        
+                        <div class="requirement-section">
+                            <h3>推荐配置</h3>
+                            <div class="form-group">
+                                <label for="recOS">操作系统</label>
+                                <input type="text" id="recOS" name="recOS" 
+                                       placeholder="例如：Windows 11 64位">
+                            </div>
+                            <div class="form-group">
+                                <label for="recCPU">处理器</label>
+                                <input type="text" id="recCPU" name="recCPU" 
+                                       placeholder="例如：Intel Core i5-10400">
+                            </div>
+                            <div class="form-group">
+                                <label for="recRAM">内存</label>
+                                <input type="text" id="recRAM" name="recRAM" 
+                                       placeholder="例如：8 GB RAM">
+                            </div>
+                            <div class="form-group">
+                                <label for="recGPU">显卡</label>
+                                <input type="text" id="recGPU" name="recGPU" 
+                                       placeholder="例如：NVIDIA GTX 1060">
+                            </div>
+                            <div class="form-group">
+                                <label for="recStorage">存储空间</label>
+                                <input type="text" id="recStorage" name="recStorage" 
+                                       placeholder="例如：5 GB 可用空间">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="cancelUpload()">取消</button>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span class="btn-text">发布游戏</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GameForge</h3>
+                    <p>锻造你的游戏宇宙</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <a href="index.html">首页</a>
+                    <a href="games.html">游戏库</a>
+                    <a href="profile.html">个人中心</a>
+                </div>
+                <div class="footer-section">
+                    <h4>联系我们</h4>
+                    <p>邮箱: contact@gameforge.com</p>
+                    <p>© 2024 GameForge. 保留所有权利。</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script src="upload-script.js"></script>
+</body>
+</html>

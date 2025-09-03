@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .result {
+            background: #e9ecef;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🔧 登录测试工具</h1>
+    
+    <div class="test-section">
+        <h3>1. 检查本地存储</h3>
+        <button class="btn" onclick="checkStorage()">检查存储数据</button>
+        <div id="storage-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. 创建测试用户</h3>
+        <button class="btn" onclick="createTestUser()">创建测试用户</button>
+        <button class="btn" onclick="clearTestData()">清除测试数据</button>
+        <div id="create-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. 测试登录状态</h3>
+        <button class="btn" onclick="testLoginStatus()">测试登录检查</button>
+        <div id="login-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>4. 测试退出登录</h3>
+        <button class="btn" onclick="testLogout()">测试退出登录</button>
+        <div id="logout-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>5. 快速操作</h3>
+        <a href="auth.html" class="btn">前往登录页</a>
+        <a href="profile.html" class="btn">前往个人中心</a>
+    </div>
+
+    <script>
+        // 检查本地存储的函数
+        function checkStorage() {
+            const result = document.getElementById('storage-result');
+            try {
+                const currentUser = localStorage.getItem('currentUser');
+                const loggedInUser = localStorage.getItem('gameforge_logged_in_user');
+                const users = localStorage.getItem('users');
+                const gameforgeUsers = localStorage.getItem('gameforge_users');
+                
+                let html = '<strong>存储数据检查结果：</strong><br>';
+                html += `currentUser: ${currentUser || 'null'}<br>`;
+                html += `gameforge_logged_in_user: ${loggedInUser || 'null'}<br>`;
+                html += `users数量: ${users ? JSON.parse(users).length : 0}<br>`;
+                html += `gameforge_users数量: ${gameforgeUsers ? JSON.parse(gameforgeUsers).length : 0}<br>`;
+                
+                result.innerHTML = html;
+                result.className = 'result';
+            } catch (error) {
+                result.innerHTML = '检查出错: ' + error.message;
+                result.className = 'result error';
+            }
+        }
+        
+        // 创建测试用户的函数
+        function createTestUser() {
+            const result = document.getElementById('create-result');
+            try {
+                // 创建测试用户数据
+                const testUser = {
+                    id: 999999,
+                    username: 'testuser',
+                    email: 'test@example.com',
+                    password: '123456',
+                    role: 'player',
+                    joinDate: new Date().toISOString(),
+                    downloadedGames: [1, 2, 3],
+                    uploadedGames: []
+                };
+                
+                // 添加到两种用户存储格式
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const gameforgeUsers = JSON.parse(localStorage.getItem('gameforge_users') || '[]');
+                
+                // 检查是否已存在
+                if (!users.find(u => u.username === 'testuser')) {
+                    users.push(testUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                if (!gameforgeUsers.find(u => u.username === 'testuser')) {
+                    gameforgeUsers.push({
+                        username: 'testuser',
+                        email: 'test@example.com',
+                        password: '123456',
+                        isDeveloper: false,
+                        joinDate: new Date().toISOString(),
+                        downloadedGames: [1, 2, 3],
+                        uploadedGames: []
+                    });
+                    localStorage.setItem('gameforge_users', JSON.stringify(gameforgeUsers));
+                }
+                
+                // 设置登录状态
+                localStorage.setItem('currentUser', JSON.stringify(testUser));
+                localStorage.setItem('gameforge_logged_in_user', 'testuser');
+                
+                result.innerHTML = '✅ 测试用户创建成功！用户名: testuser, 密码: 123456';
+                result.className = 'result success';
+                
+            } catch (error) {
+                result.innerHTML = '创建失败: ' + error.message;
+                result.className = 'result error';
+            }
+        }
+        
+        // 清除测试数据的函数
+        function clearTestData() {
+            const result = document.getElementById('create-result');
+            
+            // 只清除测试相关数据
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('gameforge_logged_in_user');
+            
+            // 清除测试用户
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const filteredUsers = users.filter(u => u.username !== 'testuser');
+            localStorage.setItem('users', JSON.stringify(filteredUsers));
+            
+            const gameforgeUsers = JSON.parse(localStorage.getItem('gameforge_users') || '[]');
+            const filteredGameforgeUsers = gameforgeUsers.filter(u => u.username !== 'testuser');
+            localStorage.setItem('gameforge_users', JSON.stringify(filteredGameforgeUsers));
+            
+            result.innerHTML = '✅ 测试数据已清除';
+            result.className = 'result success';
+        }
+        
+        // 测试登录状态检查的函数
+        function testLoginStatus() {
+            const result = document.getElementById('login-result');
+            try {
+                const loggedInUser = localStorage.getItem('gameforge_logged_in_user');
+                const gameforgeUsers = JSON.parse(localStorage.getItem('gameforge_users') || '[]');
+                
+                if (loggedInUser) {
+                    const user = gameforgeUsers.find(u => u.username === loggedInUser);
+                    if (user) {
+                        result.innerHTML = `✅ 登录状态正常<br>用户: ${user.username}<br>邮箱: ${user.email}`;
+                        result.className = 'result success';
+                    } else {
+                        result.innerHTML = `❌ 登录用户 ${loggedInUser} 不存在于用户列表中`;
+                        result.className = 'result error';
+                    }
+                } else {
+                    result.innerHTML = '❌ 未检测到登录状态，请先登录';
+                    result.className = 'result error';
+                }
+            } catch (error) {
+                result.innerHTML = '检查出错: ' + error.message;
+                result.className = 'result error';
+            }
+        }
+        
+        // 测试退出登录的函数
+        function testLogout() {
+            const result = document.getElementById('logout-result');
+            
+            // 模拟退出登录
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('gameforge_logged_in_user');
+            
+            // 检查退出结果
+            const currentUser = localStorage.getItem('currentUser');
+            const loggedInUser = localStorage.getItem('gameforge_logged_in_user');
+            
+            if (!currentUser && !loggedInUser) {
+                result.innerHTML = '✅ 退出登录成功！所有登录数据已清除';
+                result.className = 'result success';
+            } else {
+                result.innerHTML = '❌ 退出登录失败，仍有数据残留';
+                result.className = 'result error';
+            }
+            
+            // 重新检查存储状态
+            setTimeout(checkStorage, 1000);
+        }
+        
+        // 页面加载时自动检查
+        document.addEventListener('DOMContentLoaded', function() {
+            checkStorage();
+        });
+    </script>
+</body>
+</html>

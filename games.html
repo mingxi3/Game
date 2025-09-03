@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏库 - GameForge</title>
+    <!-- 引入Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- 引入粒子效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="games-styles.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">GameForge</span>
+                <span class="logo-glow"></span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="games.html" class="nav-link active">游戏库</a></li>
+                <li><a href="profile.html" class="nav-link">个人中心</a></li>
+            </ul>
+            
+            <div class="nav-user" id="nav-user">
+                <!-- 动态加载用户状态 -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <!-- 页面标题区域 -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">游戏库</h1>
+                <p class="page-description">探索数千款精彩游戏，找到属于你的冒险</p>
+            </div>
+        </section>
+
+        <!-- 搜索和筛选区域 -->
+        <section class="search-section">
+            <div class="container">
+                <div class="search-bar">
+                    <div class="search-input-container">
+                        <input type="text" id="search-input" placeholder="搜索游戏..." onkeyup="searchGames()">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    
+                    <div class="filter-options">
+                        <select id="category-filter" onchange="filterGames()">
+                            <option value="">所有分类</option>
+                            <option value="动作">动作</option>
+                            <option value="冒险">冒险</option>
+                            <option value="角色扮演">角色扮演</option>
+                            <option value="模拟">模拟</option>
+                            <option value="策略">策略</option>
+                            <option value="独立">独立</option>
+                        </select>
+                        
+                        <select id="sort-filter" onchange="sortGames()">
+                            <option value="newest">最新发布</option>
+                            <option value="popular">最受欢迎</option>
+                            <option value="rating">评分最高</option>
+                            <option value="downloads">下载最多</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏网格 -->
+        <section class="games-section">
+            <div class="container">
+                <div class="games-stats">
+                    <span id="games-count">0</span> 款游戏
+                </div>
+                
+                <div class="games-grid" id="games-grid">
+                    <!-- 游戏卡片将通过JavaScript动态加载 -->
+                </div>
+                
+                <!-- 加载更多按钮 -->
+                <div class="load-more-container">
+                    <button class="load-more-btn" id="load-more-btn" onclick="loadMoreGames()" style="display: none;">
+                        加载更多
+                    </button>
+                </div>
+                
+                <!-- 空状态提示 -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <div class="empty-icon">🎮</div>
+                    <h3>暂无游戏</h3>
+                    <p>没有找到匹配的游戏，请尝试其他搜索条件</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 GameForge. 锻造你的游戏宇宙</p>
+            <div class="footer-links">
+                <a href="#about">关于我们</a>
+                <a href="#contact">联系我们</a>
+                <a href="#terms">使用条款</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="games-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - GameForge</title>
+    <!-- 引入Google Fonts - 添加备用字体防止加载失败 -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* 字体加载失败时的备用样式 */
+        body {
+            font-family: 'Orbitron', 'Roboto', 'Microsoft YaHei', 'SimHei', sans-serif;
+        }
+        
+        /* 预加载关键字体 */
+        @font-face {
+            font-family: 'Orbitron';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: local('Orbitron'), local('Orbitron-Regular');
+        }
+        
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: local('Roboto'), local('Roboto-Regular');
+        }
+    </style>
+    <!-- 引入粒子效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile-styles.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">GameForge</span>
+                <span class="logo-glow"></span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="games.html" class="nav-link">游戏库</a></li>
+                <li><a href="profile.html" class="nav-link active">个人中心</a></li>
+            </ul>
+            
+            <div class="nav-user" id="nav-user">
+                <!-- 动态加载用户状态 -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <!-- 用户信息区域 -->
+        <section class="user-info-section">
+            <div class="container">
+                <div class="user-card">
+                    <div class="user-avatar">
+                        <span class="avatar-icon">👤</span>
+                    </div>
+                    <div class="user-details">
+                        <h1 class="username" id="username">用户名</h1>
+                        <p class="user-email" id="user-email">user@example.com</p>
+                        <div class="user-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="downloaded-count">0</span>
+                                <span class="stat-label">已下载</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="uploaded-count">0</span>
+                                <span class="stat-label">已上传</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="join-date">--</span>
+                                <span class="stat-label">加入时间</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-edit" onclick="editProfile()">编辑资料</button>
+                            <button class="btn-developer" id="developer-btn" onclick="toggleDeveloper()" style="display: none;">
+                                申请成为开发者
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 玩家视图 -->
+        <section class="player-section" id="player-section">
+            <div class="container">
+                <h2 class="section-title">我的游戏</h2>
+                <div class="games-grid" id="downloaded-games">
+                    <!-- 已下载游戏将通过JavaScript加载 -->
+                </div>
+                
+                <div class="empty-state" id="empty-downloaded" style="display: none;">
+                    <div class="empty-icon">📥</div>
+                    <h3>暂无下载的游戏</h3>
+                    <p>前往 <a href="games.html">游戏库</a> 下载你喜欢的游戏吧！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 开发者视图 -->
+        <section class="developer-section" id="developer-section" style="display: none;">
+            <div class="container">
+                <div class="developer-header">
+                    <h2 class="section-title">开发者面板</h2>
+                    <button class="btn-upload" onclick="window.location.href='upload.html'">
+                        <span>+ 上传新游戏</span>
+                    </button>
+                </div>
+                
+                <div class="developer-stats">
+                    <div class="stat-card">
+                        <h3>总上传</h3>
+                        <span class="stat-value" id="total-uploads">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>总下载</h3>
+                        <span class="stat-value" id="total-downloads">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>平均评分</h3>
+                        <span class="stat-value" id="avg-rating">0.0</span>
+                    </div>
+                </div>
+                
+                <h3 class="subsection-title">我的游戏</h3>
+                <div class="uploaded-games" id="uploaded-games">
+                    <!-- 已上传游戏将通过JavaScript加载 -->
+                </div>
+                
+                <div class="empty-state" id="empty-uploaded" style="display: none;">
+                    <div class="empty-icon">🎮</div>
+                    <h3>暂无上传的游戏</h3>
+                    <p>开始上传你的第一个游戏作品吧！</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 编辑资料模态框 -->
+    <div class="modal" id="edit-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>编辑个人资料</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form" onsubmit="saveProfile(event)">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" id="edit-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" id="edit-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>新密码（可选）</label>
+                        <input type="password" id="edit-password" placeholder="留空则不修改">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeModal()">取消</button>
+                        <button type="submit">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 GameForge. 锻造你的游戏宇宙</p>
+            <div class="footer-links">
+                <a href="#about">关于我们</a>
+                <a href="#contact">联系我们</a>
+                <a href="#terms">使用条款</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="error-handler.js"></script>
+    <script src="script.js"></script>
+    <script src="profile-script.js"></script>
+    <script src="test-fixes.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录/注册 - GameForge</title>
+    <!-- 引入Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- 引入粒子效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="auth-styles.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 认证容器 -->
+    <div class="auth-container">
+        <!-- 认证卡片 -->
+        <div class="auth-card">
+            <!-- 卡片头部 -->
+            <div class="auth-header">
+                <h1 class="auth-title">GameForge</h1>
+                <p class="auth-subtitle">锻造你的游戏宇宙</p>
+            </div>
+            
+            <!-- 选项卡切换 -->
+            <div class="auth-tabs">
+                <button class="tab-button active" data-tab="login">登录</button>
+                <button class="tab-button" data-tab="register">注册</button>
+            </div>
+            
+            <!-- 登录表单 -->
+            <div class="auth-form login-form active" id="login-form">
+                <form onsubmit="handleLogin(event)">
+                    <!-- 用户名/邮箱输入 -->
+                    <div class="form-group">
+                        <label for="login-username">用户名或邮箱</label>
+                        <input type="text" id="login-username" name="username" required>
+                        <span class="input-icon">👤</span>
+                    </div>
+                    
+                    <!-- 密码输入 -->
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" name="password" required>
+                        <span class="input-icon">🔒</span>
+                        <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
+                            👁️
+                        </button>
+                    </div>
+                    
+                    <!-- 记住我选项 -->
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="remember-me">
+                            <span class="checkmark"></span>
+                            记住我
+                        </label>
+                        <a href="#" class="forgot-link">忘记密码？</a>
+                    </div>
+                    
+                    <!-- 登录按钮 -->
+                    <button type="submit" class="auth-submit">
+                        <span>立即登录</span>
+                        <div class="button-loader" style="display: none;"></div>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- 注册表单 -->
+            <div class="auth-form register-form" id="register-form">
+                <form onsubmit="handleRegister(event)">
+                    <!-- 用户名输入 -->
+                    <div class="form-group">
+                        <label for="register-username">用户名</label>
+                        <input type="text" id="register-username" name="username" required>
+                        <span class="input-icon">👤</span>
+                    </div>
+                    
+                    <!-- 邮箱输入 -->
+                    <div class="form-group">
+                        <label for="register-email">邮箱</label>
+                        <input type="email" id="register-email" name="email" required>
+                        <span class="input-icon">📧</span>
+                    </div>
+                    
+                    <!-- 密码输入 -->
+                    <div class="form-group">
+                        <label for="register-password">密码</label>
+                        <input type="password" id="register-password" name="password" required>
+                        <span class="input-icon">🔒</span>
+                        <button type="button" class="password-toggle" onclick="togglePassword('register-password')">
+                            👁️
+                        </button>
+                    </div>
+                    
+                    <!-- 确认密码输入 -->
+                    <div class="form-group">
+                        <label for="register-confirm">确认密码</label>
+                        <input type="password" id="register-confirm" name="confirm" required>
+                        <span class="input-icon">🔒</span>
+                        <button type="button" class="password-toggle" onclick="togglePassword('register-confirm')">
+                            👁️
+                        </button>
+                    </div>
+                    
+                    <!-- 用户协议 -->
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="agree-terms" required>
+                            <span class="checkmark"></span>
+                            我同意 <a href="#" class="terms-link">用户协议</a> 和 <a href="#" class="terms-link">隐私政策</a>
+                        </label>
+                    </div>
+                    
+                    <!-- 注册按钮 -->
+                    <button type="submit" class="auth-submit">
+                        <span>立即注册</span>
+                        <div class="button-loader" style="display: none;"></div>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- 第三方登录 -->
+            <div class="social-login">
+                <p class="social-text">或使用以下方式</p>
+                <div class="social-buttons">
+                    <button class="social-btn github" onclick="socialLogin('github')">
+                        <span>GitHub</span>
+                    </button>
+                    <button class="social-btn google" onclick="socialLogin('google')">
+                        <span>Google</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 返回首页按钮 -->
+        <button class="back-home" onclick="window.location.href='index.html'">
+            ← 返回首页
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="auth-script.js"></script>
+</body>
+</html>

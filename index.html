@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameForge - 锻造你的游戏宇宙</title>
+    <!-- 引入Google Fonts - 科技感字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- 引入粒子效果JS库 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- 引入自定义样式文件 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 粒子背景容器 - 用于创建动态背景效果 -->
+    <div id="particles-js"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo区域 -->
+            <div class="nav-logo">
+                <span class="logo-text">GameForge</span>
+                <span class="logo-glow"></span>
+            </div>
+            
+            <!-- 导航菜单 -->
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">首页</a></li>
+                <li><a href="games.html" class="nav-link">游戏库</a></li>
+                <li><a href="profile.html" class="nav-link">个人中心</a></li>
+            </ul>
+            
+            <!-- 用户操作区域 -->
+            <div class="nav-user">
+                <button class="btn-login" onclick="window.location.href='auth.html'">登录</button>
+                <button class="btn-register" onclick="window.location.href='auth.html#register'">注册</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 英雄区域 - 网站最醒目的展示区域 -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-main">GameForge</span>
+                    <span class="title-sub">锻造你的游戏宇宙</span>
+                </h1>
+                <p class="hero-description">
+                    探索、创造、分享 - 在这里，每一个游戏梦想都能成为现实
+                </p>
+                <button class="cta-button" onclick="window.location.href='games.html'">
+                    <span>开始探索</span>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+        </section>
+
+        <!-- 精选游戏区域 -->
+        <section class="featured-games">
+            <div class="container">
+                <h2 class="section-title">精选游戏</h2>
+                <div class="games-grid" id="featured-games-grid">
+                    <!-- 游戏卡片将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 平台特色介绍 -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">为什么选择 GameForge</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎮</div>
+                        <h3>海量游戏</h3>
+                        <p>从独立游戏到3A大作，应有尽有</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>高速下载</h3>
+                        <p>全球CDN加速，下载速度飞快</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>开发者社区</h3>
+                        <p>与全球开发者交流，分享创意</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 GameForge. 锻造你的游戏宇宙</p>
+            <div class="footer-links">
+                <a href="#about">关于我们</a>
+                <a href="#contact">联系我们</a>
+                <a href="#terms">使用条款</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入自定义JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

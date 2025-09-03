@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏详情 - GameForge</title>
+    
+    <!-- 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- 样式 -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="game-details-styles.css">
+    
+    <!-- 粒子效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">GameForge</span>
+            </a>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">首页</a>
+                <a href="games.html" class="nav-link">游戏库</a>
+                <a href="profile.html" class="nav-link">个人中心</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn-logout" id="logoutBtn" style="display: none;">
+                    退出登录
+                </button>
+                <a href="auth.html" class="btn-login" id="loginBtn">登录/注册</a>
+            </div>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 游戏详情主内容 -->
+    <main class="game-details-main">
+        <!-- 游戏横幅 -->
+        <section class="game-banner">
+            <div class="banner-content">
+                <div class="banner-image-container">
+                    <img id="gameBannerImage" src="" alt="游戏横幅" class="banner-image">
+                    <div class="banner-overlay"></div>
+                </div>
+                <div class="banner-info">
+                    <h1 id="gameTitle" class="game-title-large">游戏标题</h1>
+                    <div class="game-meta-info">
+                        <span class="developer-name" id="gameDeveloper">开发者</span>
+                        <span class="separator">•</span>
+                        <span class="game-category" id="gameCategory">分类</span>
+                        <span class="separator">•</span>
+                        <span class="game-version" id="gameVersion">版本</span>
+                    </div>
+                    <div class="game-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="downloadCount">0</span>
+                            <span class="stat-label">下载次数</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="rating">4.5</span>
+                            <span class="stat-label">评分</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="fileSize">0 MB</span>
+                            <span class="stat-label">文件大小</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏内容区域 -->
+        <section class="game-content-section">
+            <div class="container">
+                <div class="content-grid">
+                    <!-- 左侧内容 -->
+                    <div class="content-left">
+                        <!-- 游戏描述 -->
+                        <div class="content-block">
+                            <h2 class="block-title">游戏介绍</h2>
+                            <div class="game-description" id="gameDescription">
+                                游戏详细描述将在这里显示...
+                            </div>
+                        </div>
+
+                        <!-- 游戏截图 -->
+                        <div class="content-block">
+                            <h2 class="block-title">游戏截图</h2>
+                            <div class="screenshots-grid" id="screenshotsGrid">
+                                <!-- 截图将通过JavaScript动态加载 -->
+                            </div>
+                        </div>
+
+                        <!-- 系统要求 -->
+                        <div class="content-block">
+                            <h2 class="block-title">系统要求</h2>
+                            <div class="requirements">
+                                <div class="requirement-item">
+                                    <strong>最低配置：</strong>
+                                    <ul id="minRequirements">
+                                        <li>操作系统：Windows 10</li>
+                                        <li>处理器：Intel Core i3</li>
+                                        <li>内存：4 GB RAM</li>
+                                        <li>显卡：GTX 660</li>
+                                        <li>存储空间：2 GB 可用空间</li>
+                                    </ul>
+                                </div>
+                                <div class="requirement-item">
+                                    <strong>推荐配置：</strong>
+                                    <ul id="recRequirements">
+                                        <li>操作系统：Windows 11</li>
+                                        <li>处理器：Intel Core i5</li>
+                                        <li>内存：8 GB RAM</li>
+                                        <li>显卡：GTX 1060</li>
+                                        <li>存储空间：5 GB 可用空间</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧内容 -->
+                    <div class="content-right">
+                        <!-- 游戏信息卡片 -->
+                        <div class="info-card">
+                            <h3 class="card-title">游戏信息</h3>
+                            <div class="info-list">
+                                <div class="info-item">
+                                    <span class="info-label">发布日期</span>
+                                    <span class="info-value" id="releaseDate">2024-01-01</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">更新日期</span>
+                                    <span class="info-value" id="updateDate">2024-01-15</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">版本号</span>
+                                    <span class="info-value" id="versionNumber">1.0.0</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">文件大小</span>
+                                    <span class="info-value" id="fileSizeInfo">500 MB</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">支持平台</span>
+                                    <span class="info-value" id="platforms">Windows, macOS, Linux</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 下载区域 -->
+                        <div class="download-card">
+                            <h3 class="card-title">下载游戏</h3>
+                            <div class="download-info">
+                                <div class="download-price">
+                                    <span class="price-text">免费</span>
+                                </div>
+                                <button class="btn-download" id="downloadBtn">
+                                    <span class="btn-text">立即下载</span>
+                                    <span class="btn-icon">↓</span>
+                                </button>
+                                <p class="download-note">需要登录后下载</p>
+                            </div>
+                        </div>
+
+                        <!-- 开发者信息 -->
+                        <div class="developer-card">
+                            <h3 class="card-title">开发者信息</h3>
+                            <div class="developer-info">
+                                <div class="developer-avatar">
+                                    <span id="devAvatar">D</span>
+                                </div>
+                                <div class="developer-details">
+                                    <h4 id="devName">开发者名称</h4>
+                                    <p id="devDescription">开发者简介...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GameForge</h3>
+                    <p>锻造你的游戏宇宙</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <a href="index.html">首页</a>
+                    <a href="games.html">游戏库</a>
+                    <a href="profile.html">个人中心</a>
+                </div>
+                <div class="footer-section">
+                    <h4>联系我们</h4>
+                    <p>邮箱: contact@gameforge.com</p>
+                    <p>© 2024 GameForge. 保留所有权利。</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script src="game-details-script.js"></script>
+</body>
+</html>
